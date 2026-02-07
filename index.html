@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kittu ❤️ Please Don’t Be Angry</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff6a88, #ff99ac);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  background: white;
+  padding: 35px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+  max-width: 420px;
+}
+
+h1 { color: #ff2f68; }
+p { font-size: 18px; color: #444; }
+
+.buttons {
+  margin-top: 25px;
+  position: relative;
+  height: 150px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+#yesBtn {
+  background: #ff2f68;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#noBtn {
+  background: #eee;
+  color: #333;
+  left: 15%;
+}
+
+.heart {
+  position: fixed;
+  font-size: 22px;
+  animation: float 4s linear infinite;
+  color: #ff2f68;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+audio { display:none; }
+</style>
+</head>
+
+<body>
+
+<!-- Background music -->
+<audio autoplay loop>
+  <source src="solid-body.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Voice note (YOU record this) -->
+<audio id="voiceNote">
+  <source src="voice-note.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card" id="card">
+  <h1>Kittu 😌💖</h1>
+  <p id="text">
+    Please thoda patience rakho 😐<br>
+    Ye journey important hai.
+  </p>
+
+  <div class="buttons">
+    <button id="yesBtn">OKAY 😇</button>
+    <button id="noBtn">NO 😐</button>
+  </div>
+</div>
+
+<script>
+const card = document.getElementById("card");
+const text = document.getElementById("text");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const voice = document.getElementById("voiceNote");
+
+let step = 0;
+let noCount = 0;
+
+const scenes = [
+  {
+    text: "Achha Ji… ek baat batao 🤔<br><br>ki mujhe aap isliye pasand aayi kyuki aap mere sapne me aayi thi.",
+    yes: "Achha Ji 😌",
+    no: "WAIT— 😐"
+  },
+  {
+    text: "Achha Ji, aisa h kya? 😏<br><br>Drama thoda zyada nahi hota? 🎭",
+    yes: "Bilkul nahi 💁‍♀️",
+    no: "WAIT— 😭"
+  },
+  {
+    text: "Hmm… tone thodi change lag rahi hai 😐<br><br>Kittu, gussa ho?",
+    yes: "Nahi 😌",
+    no: "Haan 😤"
+  }
+];
+
+yesBtn.addEventListener("click", () => {
+  if (step < scenes.length) {
+    const s = scenes[step];
+    text.innerHTML = s.text;
+    yesBtn.innerText = s.yes;
+    noBtn.innerText = s.no;
+    step++;
+  } else if (step === scenes.length) {
+    startArgument();
+    step++;
+  }
+});
+
+noBtn.addEventListener("mouseover", () => {
+  noCount++;
+  noBtn.innerText = "WAIT— 😭";
+  const x = Math.random() * 300 - 150;
+  const y = Math.random() * 200 - 100;
+  const scale = Math.max(0, 1 - noCount * 0.2);
+  noBtn.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  if (noCount >= 5) {
+    noBtn.style.opacity = "0";
+    noBtn.style.pointerEvents = "none";
+  }
+});
+
+function startArgument() {
+  card.innerHTML = `
+    <h1>Achha Ji 😤</h1>
+    <p id="argText">
+      Aapko pata hai…<br>
+      Aap hamesha aise hi bolte ho 😒
+    </p>
+  `;
+
+  const argText = document.getElementById("argText");
+
+  setTimeout(() => {
+    argText.innerHTML = "Main drama karti hoon matlab kuch bhi? 😤";
+  }, 2500);
+
+  setTimeout(() => {
+    argText.innerHTML = "Achha Ji, aisa h kya? 😔";
+  }, 5000);
+
+  setTimeout(() => {
+    calmScene();
+  }, 7500);
+}
+
+function calmScene() {
+  card.innerHTML = `
+    <h1>Kittu 🥹</h1>
+    <p>
+      Ruko…<br>
+      Pehle meri awaaz sun lo 😌
+    </p>
+    <button id="playVoice" style="
+      margin-top:20px;
+      padding:15px 30px;
+      font-size:16px;
+      background:#ff2f68;
+      color:white;
+      border:none;
+      border-radius:30px;
+      cursor:pointer;
+    ">▶ Play Voice Note 🎧</button>
+  `;
+
+  document.getElementById("playVoice").addEventListener("click", () => {
+    voice.play();
+    setTimeout(finalProposal, 6000); // after voice plays
+  });
+}
+
+function finalProposal() {
+  card.innerHTML = `
+    <h1>Kittu ❤️</h1>
+    <p>
+      Ab sach me 😌<br><br>
+      Aap thodi sweet ho,<br>
+      thodi dramatic ho,<br>
+      aur mere liye perfect ho 💖
+    </p>
+    <h2>Will you be my Valentine? 💘</h2>
+    <button id="finalYes" style="
+      margin-top:20px;
+      padding:16px 32px;
+      font-size:18px;
+      background:#ff2f68;
+      color:white;
+      border:none;
+      border-radius:30px;
+      cursor:pointer;
+    ">YES 💖</button>
+  `;
+
+  document.getElementById("finalYes").addEventListener("click", () => {
+    card.innerHTML = `
+      <h1>YAYYYYY 😭💃❤️</h1>
+      <p>
+        Achha Ji… matlab maan gayi? 😌<br><br>
+        Valentine secured 💕<br>
+        Drama unlimited 🎭<br>
+        Solid Body forever 🕺
+      </p>
+      <h2>Happy Valentine’s Day, Kittu 💘</h2>
+    `;
+    startHearts();
+  });
+}
+
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+  }, 200);
+}
+</script>
+
+</body>
+</html>
